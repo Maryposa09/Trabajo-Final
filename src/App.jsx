@@ -1,22 +1,24 @@
-import "./App.css";
+import './App.css';
 import React from 'react';
 import TaskList from './components/TaskList/TaskList';
 import TaskForm from './components/TaskForm/TaskForm';
-import useTaskData from "./components/TaskData/TaskData";
+import useTaskData from './components/TaskData/TaskData';
 
 function App() {
   const { tasks, setTasks } = useTaskData();
 
   const handleAddTask = (newTask) => {
-    setTasks([...tasks, newTask]);
+    setTasks((current) => [...current, newTask]);
   };
 
   const handleTaskCompleted = (taskId) => {
-    setTasks(tasks.map((t) => (t.id === taskId ? { ...t, completed: true } : t)));
+    setTasks((current) => current.map((task) =>
+      task.id === taskId ? { ...task, completed: !task.completed } : task
+    ));
   };
 
   const handleTaskDeleted = (taskId) => {
-    setTasks(tasks.filter((t) => t.id !== taskId));
+    setTasks((current) => current.filter((task) => task.id !== taskId));
   };
 
   return (
